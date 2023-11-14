@@ -35,7 +35,7 @@ document.getElementById('signup').addEventListener('submit', (event) => {
       if (!response.ok) {
         throw new Error('Network response was not ok')
       }
-      window.location.href = './index.html'
+      window.location.href = './login.html'
     })
     .catch((error) => {
       console.error('Error:', error)

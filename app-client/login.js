@@ -29,11 +29,9 @@ document.getElementById('login').addEventListener('submit', (e) => {
     .then((data) => {
       if (data) {
         localStorage.setItem('token', data.token)
-        localStorage.setItem('email', data.rows[0].email)
-
         setTimeout(() => {
           window.location.href = './index.html'
-        }, 2000)
+        }, 1000)
       } else {
         alert('Credenciales incorrectas')
         return

@@ -8,10 +8,15 @@
 <body>
   <h1>Hola</h1>
   <form id="tasks">
-    <label for="task">Task</label>
-    <input type="text" name="task" id="task">
+    <label for="title">Title</label>
+    <input type="text" name="title" id="title">
+    <label for="description">Description</label>
+    <input type="text" name="description" id="description">
     <input type="submit" value="Add Task">
   </form>
+  <div>
+    <ul id="task-container"></ul>
+  </div>
   <script src="index.js"></script>
 </body>
 </html>
