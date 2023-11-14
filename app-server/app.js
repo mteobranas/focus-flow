@@ -142,7 +142,37 @@ app.post('/tasks', async (req, res) => {
     )
 
     // envía las tareas como json para mostrarlas en el front
-    res.status(200).json(updatedTasks)
+    res.status(201).json(updatedTasks)
+  } catch (err) {
+    res.status(500).json({ error: 'Error interno del servidor' })
+  } finally {
+    if (conn) conn.release()
+  }
+})
+
+app.delete('/tasks', async (req, res) => {
+  let conn
+  let email
+  try {
+    // decodifica el correo
+    const token = req.headers.authorization
+    const decoded = jwt.verify(token, secret)
+    email = decoded.email
+
+    // hace la consulta a la bd para traer la id del user
+    conn = await pool.getConnection()
+    let user_id = await conn.query('SELECT id FROM users WHERE email = ?', [
+      email,
+    ])
+    user_id = user_id[0].id
+
+    // a partir la id, trae las tareas del user
+    const tasks = await conn.query(
+      'DELETE FROM tasks where id = ?', [req.body.id]
+    )
+
+    // envía las tareas como json para mostrarlas en el front
+    res.status(200).json({message: "Tarea eliminada con éxito"})
   } catch (err) {
     res.status(500).json({ error: 'Error interno del servidor' })
   } finally {

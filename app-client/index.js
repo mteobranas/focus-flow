@@ -26,6 +26,7 @@ function printTasks(tasks) {
     TASK_CONTAINER.innerHTML += `<li>
     <h3>${task.title}</h3>
     <p>${task.description}</p>
+    <button onclick="deleteTask(this, ${task.id})">Delete</button>
     </li>`
   })
 }
@@ -51,6 +52,24 @@ function createTask() {
     .then((data) => {
       printTasks(data)
     })
+}
+
+function deleteTask(task, task_id) {
+  const token = localStorage.getItem('token')
+  fetch('http://localhost:3000/tasks', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: token,
+    },
+    body: JSON.stringify({
+      id: task_id,
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => console.log(data.message))
+
+  task.parentElement.remove()
 }
 
 document.addEventListener('DOMContentLoaded', () => {
