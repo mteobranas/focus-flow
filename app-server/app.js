@@ -97,8 +97,8 @@ app.get('/tasks', async (req, res) => {
 
     // a partir la id, trae las tareas del user
     const tasks = await conn.query(
-      'SELECT id, title, description, completed FROM tasks WHERE user_id = ?',
-      [user_id]
+      'SELECT id, title, description, completed FROM tasks WHERE user_id = ? AND completed = ?',
+      [user_id, "false"]
     )
 
     // envía las tareas como json para mostrarlas en el front
@@ -127,18 +127,18 @@ app.post('/tasks', async (req, res) => {
     user_id = user_id[0].id
 
     // trae la tarea desde el cuerpo de la petición
-    const { title, description, completed } = req.body
+    const { title, description } = req.body
 
     // crea una nueva tarea con el id del usuario
     await conn.query(
-      'INSERT INTO tasks (title, description, completed, user_id) VALUES (?, ?, ?, ?)',
-      [title, description, completed, user_id]
+      'INSERT INTO tasks (title, description, user_id) VALUES (?, ?, ?)',
+      [title, description, user_id]
     )
 
     // trae las tareas actualizadas
     const updatedTasks = await conn.query(
-      'SELECT id, title, description, completed FROM tasks WHERE user_id = ?',
-      [user_id]
+      'SELECT id, title, description, completed FROM tasks WHERE user_id = ? AND completed = ?',
+      [user_id, "false"]
     )
 
     // envía las tareas como json para mostrarlas en el front
@@ -167,12 +167,45 @@ app.delete('/tasks', async (req, res) => {
     user_id = user_id[0].id
 
     // a partir la id, trae las tareas del user
-    const tasks = await conn.query(
-      'DELETE FROM tasks where id = ?', [req.body.id]
+    await conn.query('DELETE FROM tasks where id = ?', [req.body.id])
+
+    // envía las tareas como json para mostrarlas en el front
+    res.status(200).json({ message: 'Tarea eliminada con éxito' })
+  } catch (err) {
+    res.status(500).json({ error: 'Error interno del servidor' })
+  } finally {
+    if (conn) conn.release()
+  }
+})
+
+app.patch('/tasks', async (req, res) => {
+  let conn
+  let email
+  try {
+    // decodifica el correo
+    const token = req.headers.authorization
+    const decoded = jwt.verify(token, secret)
+    email = decoded.email
+
+    // hace la consulta a la bd para traer la id del user
+    conn = await pool.getConnection()
+    let user_id = await conn.query('SELECT id FROM users WHERE email = ?', [
+      email,
+    ])
+    user_id = user_id[0].id
+
+    // a partir la id, trae las tareas del user
+    await conn.query('UPDATE tasks set completed = ? WHERE id = ?', [
+      "true", req.body.id,
+    ])
+
+    // trae las tareas actualizadas
+    const updatedTasks = await conn.query(
+      'SELECT id, title, description, completed FROM tasks WHERE completed = ?', ["true"]
     )
 
     // envía las tareas como json para mostrarlas en el front
-    res.status(200).json({message: "Tarea eliminada con éxito"})
+    res.status(200).json(updatedTasks)
   } catch (err) {
     res.status(500).json({ error: 'Error interno del servidor' })
   } finally {

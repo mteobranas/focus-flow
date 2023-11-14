@@ -20,12 +20,14 @@ function getUserTasks() {
 }
 
 function printTasks(tasks) {
-  const TASK_CONTAINER = document.getElementById('task-container')
+  const TASK_CONTAINER = document.getElementById('tasks_list')
   TASK_CONTAINER.innerHTML = ''
   tasks.forEach((task) => {
     TASK_CONTAINER.innerHTML += `<li>
     <h3>${task.title}</h3>
     <p>${task.description}</p>
+    <label for="completed">Completed</label>
+    <input type="checkbox" id="completed" name="completed" onchange="completeTask(this, ${task.id})">
     <button onclick="deleteTask(this, ${task.id})">Delete</button>
     </li>`
   })
@@ -45,13 +47,43 @@ function createTask() {
     body: JSON.stringify({
       title: title,
       description: description,
-      completed: 'false',
     }),
   })
     .then((res) => res.json())
     .then((data) => {
       printTasks(data)
     })
+}
+
+function completeTask(task, task_id) {
+  const token = localStorage.getItem('token')
+  const COMPLETED_TASKS = document.getElementById('completed_tasks')
+
+  fetch('http://localhost:3000/tasks', {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: token,
+    },
+    body: JSON.stringify({
+      id: task_id,
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      COMPLETED_TASKS.innerHTML = ''
+      data.forEach((task) => {
+        COMPLETED_TASKS.innerHTML += `<li>
+      <h3>${task.title}</h3>
+      <p>${task.description}</p>
+      <button onclick="deleteTask(this, ${task.id})">Delete</button>
+      </li>`
+      })
+    })
+
+  if (task) {
+    task.parentElement.remove()
+  }
 }
 
 function deleteTask(task, task_id) {
@@ -74,4 +106,5 @@ function deleteTask(task, task_id) {
 
 document.addEventListener('DOMContentLoaded', () => {
   getUserTasks()
+  completeTask()
 })
