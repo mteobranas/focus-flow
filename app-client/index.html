@@ -1,25 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <h1>Hola</h1>
-  <form id="tasks">
-    <label for="title">Title</label>
-    <input type="text" name="title" id="title">
-    <label for="description">Description</label>
-    <input type="text" name="description" id="description">
-    <input type="submit" value="Add Task">
-  </form>
-  <div>
-    <h1>Tasks</h1>
-    <ul id="tasks_list"></ul>
-    <h1>Completed Tasks</h1>
-    <ul id="completed_tasks"></ul>
-  </div>
-  <script src="index.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <header class="app-header">
+        <div class="logo-container">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="h-6 w-6 text-gray-600"
+          >
+            <path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"></path>
+            <path
+              d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"
+            ></path>
+            <path d="M12 3v6"></path>
+          </svg>
+          <span class="app-title">Focus Flow</span>
+        </div>
+        <div class="user-dropdown" id="userDropdown">
+          <div class="user-info" id="userInfo">
+            <span class="user-name" id="userName">Mateo Brañas</span>
+            <img
+              src="https://randomuser.me/api/portraits/men/1.jpg"
+              alt="User Avatar"
+              class="user-avatar"
+              id="userAvatar"
+            />
+          </div>
+          <div class="dropdown-content" id="dropdownContent">
+            <a href="#">Profile</a>
+            <a href="#">Settings</a>
+            <a onclick="logOut()">Logout</a>
+          </div>
+        </div>
+      </header>
+      <div class="app-content">
+        <aside class="app-sidebar">
+          <nav class="app-navbar">
+            <a class="nav-link" id="tasks-nav" onclick="switchToTask()"
+              >Tasks</a
+            >
+            <a class="nav-link" id="completed-nav" onclick="switchToCompleted()"
+              >Completed</a
+            >
+            <a class="nav-link">Settings</a>
+          </nav>
+        </aside>
+        <main class="app-main" id="id-app-main">
+          <button id="addTaskBtn" class="add-task-btn">Add Task</button>
+          <ul class="task-list" id="tasks-list"></ul>
+        </main>
+        <section class="app-completed hide" id="id-app-completed">
+          <ul class="task-list" id="completed-list"></ul>
+        </section>
+      </div>
+    </div>
+
+    <div id="addTaskModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeModal">&times;</span>
+        <h2>Add Task</h2>
+        <form id="taskForm">
+          <label for="taskTitle">Title:</label>
+          <input type="text" id="taskTitle" name="taskTitle" required />
+
+          <label for="taskDescription">Description:</label>
+          <textarea
+            id="taskDescription"
+            name="taskDescription"
+            rows="4"
+            required
+          ></textarea>
+
+          <button type="submit">Add Task</button>
+        </form>
+      </div>
+    </div>
+
+    <script src="js/index.js"></script>
+  </body>
 </html>

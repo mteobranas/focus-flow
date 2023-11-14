@@ -79,7 +79,6 @@ app.use('/tasks', (req, res, next) => {
 })
 
 app.get('/tasks', async (req, res) => {
-  console.log('si')
   let conn
   let email
   try {

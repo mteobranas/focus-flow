@@ -1,0 +1,249 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.hide {
+  display: none !important;
+}
+
+.app-header {
+  padding: 0 40px;
+  display: flex;
+  height: 100px;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ccc;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.app-title {
+  margin-left: 10px;
+  font-size: 18px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+}
+
+.user-info:hover {
+  cursor: pointer;
+}
+
+.user-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+
+.app-content {
+  display: flex;
+}
+
+.app-sidebar {
+  width: 20%;
+  height: calc(100vh - 100px);
+  border-right: 1px solid #ccc;
+  padding: 20px 20px 20px 40px;
+}
+
+.app-navbar {
+  display: flex;
+  flex-direction: column;
+  font-size: 24px;
+  gap: 6px;
+}
+
+.nav-link {
+  display: block;
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: #333;
+  cursor: pointer;
+}
+
+.app-main {
+  width: 80%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.add-task-btn {
+  padding: 10px;
+  background-color: #e5e7eb;
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.add-task-btn:hover {
+  background-color: #c1c3c7;
+}
+
+.task-list {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-item:hover {
+  cursor: pointer;
+}
+
+.task-checkbox {
+  margin-right: 10px;
+  width: 16px;
+  height: 16px;
+}
+
+.delete-task-btn {
+  color: #333;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  margin-left: 20px;
+  background-color: #fff;
+}
+
+.app-completed {
+  width: 80%;
+  padding: 20px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(2px);
+}
+
+.modal-content {
+  width: 320px;
+  background-color: #fefefe;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #f00;
+}
+
+#taskForm {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 80%;
+  gap: 5px;
+}
+
+#taskForm label {
+  margin-top: 10px;
+}
+
+#taskForm input,
+textarea {
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 100%;
+  max-height: 300px;
+}
+
+#taskForm textarea {
+  min-height: 120px;
+  min-width: 100%;
+}
+
+#taskForm input:focus,
+textarea:focus {
+  border-color: #c1c3c7;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.7);
+  outline: none;
+}
+
+#taskForm button {
+  padding: 10px;
+  background-color: #e5e7eb;
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#taskForm button:hover {
+  background-color: #c1c3c7;
+}
+
+.user-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  width: 200px;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+  cursor: pointer;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.show {
+  display: block;
+}

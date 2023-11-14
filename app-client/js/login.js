@@ -29,9 +29,8 @@ document.getElementById('login').addEventListener('submit', (e) => {
     .then((data) => {
       if (data) {
         localStorage.setItem('token', data.token)
-        setTimeout(() => {
-          window.location.href = './index.html'
-        }, 1000)
+
+        window.location.href = './index.html'
       } else {
         alert('Credenciales incorrectas')
         return
