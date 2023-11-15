@@ -1,18 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <form id="login">
-    <label for="email">Email</label>
-    <input type="email" name="email" id="email">
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password">
-    <input type="submit" value="Login">
-  </form>
-  <script src="js/login.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="./favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+    <title>Focus Flow</title>
+  </head>
+  <body class="loginBody">
+    <div class="container">
+      <div class="header">
+        <h2>Log in to your account</h2>
+      </div>
+      <div class="form-container">
+        <div class="form-wrapper">
+          <div class="form-row"></div>
+          <div class="form-group">
+            <label for="email-address">Email address</label>
+            <input
+              type="email"
+              id="email-address"
+              autocomplete="email"
+              required=""
+              placeholder="you@example.com"
+              name="email"
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              autocomplete="current-password"
+              required=""
+              placeholder="********"
+              name="password"
+            />
+          </div>
+          <div class="form-group">
+            <button type="submit" id="login-btn">Log In</button>
+          </div>
+        </div>
+      </div>
+      <p>Do not have an account? <a href="signup.html">Sign Up</a></p>
+    </div>
+    <script src="js/login.js"></script>
+  </body>
 </html>

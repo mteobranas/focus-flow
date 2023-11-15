@@ -39,6 +39,10 @@ body {
   font-size: 18px;
 }
 
+.user-name {
+  padding-right: 6px;
+}
+
 .user-info:hover {
   cursor: pointer;
 }
@@ -241,9 +245,105 @@ textarea:focus {
 }
 
 .dropdown-content a:hover {
-  background-color: #ddd;
+  background-color: #c1c3c7;
 }
 
 .show {
   display: block;
+}
+
+.loginBody, .signupBody {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.container {
+  max-width: 400px;
+  background-color: #fff;
+  padding: 20px;
+  width: 400px;
+  height: 400px;
+  border-radius: 8px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+}
+
+.loginBody > .container {
+  height: 320px;
+}
+
+.header {
+  text-align: center;
+}
+
+.logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.header h2 {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+.container p {
+  text-align: center;
+}
+
+.container a {
+  text-decoration: underline;
+  color: #215;
+}
+
+.form-container {
+  margin-top: 20px;
+}
+
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row {
+  display: flex;
+  gap: 10px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-group label {
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-group button {
+  background-color: #e5e7eb;
+  color: #333;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.form-group button:hover {
+  background-color: #c1c3c7;
 }

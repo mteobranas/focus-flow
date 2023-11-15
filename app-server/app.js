@@ -26,8 +26,8 @@ app.post('/signup', async (req, res) => {
   try {
     conn = await pool.getConnection()
     const rows = await conn.query(
-      'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
-      [user.username, user.email, user.password]
+      'INSERT INTO users (firstName, lastName, email, password) VALUES (?, ?, ?, ?)',
+      [user.firstName, user.lastName, user.emailAddress, user.password]
     )
     res.status(200).json({ message: 'Usuario registrado correctamente' })
   } catch (e) {
@@ -44,20 +44,20 @@ app.post('/signup', async (req, res) => {
 
 app.post('/login', async (req, res) => {
   let conn
-  let { email, password } = req.body
+  let { emailAddress, password } = req.body
   try {
     // verifica si existe un usuario con ese email y con esa password
     conn = await pool.getConnection()
     const rows = await conn.query(
       'SELECT email, password FROM users WHERE email = ? AND password = ?',
-      [email, password]
+      [emailAddress, password]
     )
     if (rows.length === 0) {
       res.status(401).json({ message: 'Credenciales incorrectas' })
       console.log('tenés un error, maestro')
     } else {
       // encripta el email del usuario en un token para después autenticarlo
-      const token = jwt.sign({ email }, secret)
+      const token = jwt.sign({ emailAddress }, secret)
       res.status(200).json({ token })
     }
   } catch (error) {
@@ -80,28 +80,27 @@ app.use('/tasks', (req, res, next) => {
 
 app.get('/tasks', async (req, res) => {
   let conn
-  let email
+  let emailAddress
   try {
     // decodifica el correo
     const token = req.headers.authorization
     const decoded = jwt.verify(token, secret)
-    email = decoded.email
+    emailAddress = decoded.emailAddress
 
     // hace la consulta a la bd para traer la id del user
     conn = await pool.getConnection()
-    let user_id = await conn.query('SELECT id FROM users WHERE email = ?', [
-      email,
+    let user = await conn.query('SELECT id, firstName, lastName FROM users WHERE email = ?', [
+      emailAddress,
     ])
-    user_id = user_id[0].id
+    user_id = user[0].id
 
     // a partir la id, trae las tareas del user
     const tasks = await conn.query(
       'SELECT id, title, description, completed FROM tasks WHERE user_id = ? AND completed = ?',
       [user_id, "false"]
     )
-
     // envía las tareas como json para mostrarlas en el front
-    res.status(200).json(tasks)
+    res.status(200).json({ tasks, user })
   } catch (err) {
     res.status(500).json({ error: 'Error interno del servidor' })
   } finally {
@@ -111,17 +110,17 @@ app.get('/tasks', async (req, res) => {
 
 app.post('/tasks', async (req, res) => {
   let conn
-  let email
+  let emailAddress
   try {
     // decodifica el correo
     const token = req.headers.authorization
     const decoded = jwt.verify(token, secret)
-    email = decoded.email
+    emailAddress = decoded.emailAddress
 
     // hace la consulta a la bd para traer la id del user
     conn = await pool.getConnection()
     let user_id = await conn.query('SELECT id FROM users WHERE email = ?', [
-      email,
+      emailAddress,
     ])
     user_id = user_id[0].id
 
@@ -151,17 +150,17 @@ app.post('/tasks', async (req, res) => {
 
 app.delete('/tasks', async (req, res) => {
   let conn
-  let email
+  let emailAddress
   try {
     // decodifica el correo
     const token = req.headers.authorization
     const decoded = jwt.verify(token, secret)
-    email = decoded.email
+    emailAddress = decoded.emailAddress
 
     // hace la consulta a la bd para traer la id del user
     conn = await pool.getConnection()
     let user_id = await conn.query('SELECT id FROM users WHERE email = ?', [
-      email,
+      emailAddress,
     ])
     user_id = user_id[0].id
 
@@ -179,17 +178,17 @@ app.delete('/tasks', async (req, res) => {
 
 app.patch('/tasks', async (req, res) => {
   let conn
-  let email
+  let emailAddress
   try {
     // decodifica el correo
     const token = req.headers.authorization
     const decoded = jwt.verify(token, secret)
-    email = decoded.email
+    emailAddress = decoded.emailAddress
 
     // hace la consulta a la bd para traer la id del user
     conn = await pool.getConnection()
     let user_id = await conn.query('SELECT id FROM users WHERE email = ?', [
-      email,
+      emailAddress,
     ])
     user_id = user_id[0].id
 

@@ -46,8 +46,14 @@ function getUserTasks() {
   })
     .then((res) => res.json())
     .then((data) => {
-      printTasks(data)
+      printUserInfo(data.user[0].firstName + ' ' + data.user[0].lastName)
+      printTasks(data.tasks)
     })
+}
+
+function printUserInfo(user) {
+  const userName = document.getElementById('userName')
+  userName.innerHTML = user
 }
 
 function printTasks(tasks) {

@@ -3,8 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Task Manager</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <title>Task Manager</title>
   </head>
   <body>
     <div class="app-container">
@@ -32,7 +34,7 @@
         </div>
         <div class="user-dropdown" id="userDropdown">
           <div class="user-info" id="userInfo">
-            <span class="user-name" id="userName">Mateo Brañas</span>
+            <span class="user-name" id="userName"></span>
             <img
               src="https://randomuser.me/api/portraits/men/1.jpg"
               alt="User Avatar"
@@ -56,7 +58,6 @@
             <a class="nav-link" id="completed-nav" onclick="switchToCompleted()"
               >Completed</a
             >
-            <a class="nav-link">Settings</a>
           </nav>
         </aside>
         <main class="app-main" id="id-app-main">

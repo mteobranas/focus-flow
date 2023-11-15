@@ -1,22 +1,24 @@
 function createUser() {
-  const username = document.getElementById('username').value
-  const email = document.getElementById('email').value
+  const firstName = document.getElementById('first-name').value
+  const lastName = document.getElementById('last-name').value
+  const emailAddress = document.getElementById('email-address').value
   const password = document.getElementById('password').value
 
-  if (!username || !email || !password) {
-    console.log('Please fill in all fields')
+  if (!firstName || !lastName || !emailAddress || !password) {
+    alert('Please fill in all fields')
     return
   } else {
     const user = {
-      username: username,
-      email: email,
+      firstName: firstName,
+      lastName: lastName,
+      emailAddress: emailAddress,
       password: password,
     }
     return user
   }
 }
 
-document.getElementById('signup').addEventListener('submit', (event) => {
+document.getElementById('signup-btn').addEventListener('click', (event) => {
   event.preventDefault()
   const user = createUser()
 
@@ -33,11 +35,11 @@ document.getElementById('signup').addEventListener('submit', (event) => {
   })
     .then((response) => {
       if (!response.ok) {
-        throw new Error('Network response was not ok')
+        throw new Error(response.statusText)
       }
       window.location.href = './login.html'
     })
     .catch((error) => {
-      console.error('Error:', error)
+      alert(error)
     })
 })
